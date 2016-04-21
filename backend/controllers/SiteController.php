@@ -1,83 +1,149 @@
 <?php
 namespace backend\controllers;
-
-use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
-use common\models\LoginForm;
-use yii\filters\VerbFilter;
+use common\models\News;
+use common\models\Category;
+use common\models\Tag;
+use yii\helpers\Json;
 
-/**
- * Site controller
- */
-class SiteController extends Controller
-{
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
+class SiteController extends Controller{
+	public $layout = 'backend';
+	public $enableCsrfValidation = false;
+	private $command = 'V5BymarxV5';
 
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
+	public function actionIndex(){
+		return $this->render('index');
+	}
+	public function actionEditnews()
+	{
+		if($this->checkMe())
+			return $this->render('edit-news');
+		else
+			return $this->render('error');
+	}
+	public function actionEditcategory(){
+		if($this->checkMe())
+			return $this->render('edit-category');
+	}
+	public function actionEdittag(){
+		if($this->checkMe())
+			return $this->render('edit-tag');
+	}
+	public function actionAddnews(){
+		if($this->checkMe())
+			return $this->render('add-news');
+	}
 
-    public function actionLogin()
-    {
-        if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+	public function actionCookie(){
+		$psw = \YII::$app->request->post('password');
+		if($psw==$this->command){
+			setcookie('command',$psw,time ()+ 3600*24*30);
+			return $this->render('edit-news');
+		}else{
+			echo "<script type=\"text/javascript\">alert(\"密码错误,请重新输入!\");</script>";
+			return $this->render('index');
+		}
+	}
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }
+	/**
+	 * 检查权限
+	 * @return bool
+	 */
+	public function checkMe(){
+		return $_COOKIE['command']==$this->command;
+	}
 
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
+	public function actionNews(){
+		$newsList = new News();
+		$newsEdit = $newsList->getNewsEdit();
+		$data = array(
+			"total"=>count($newsEdit),
+			"rows"=>$newsEdit
+		);
+		echo Json::encode($data);
+	}
 
-        return $this->goHome();
-    }
+	public function actionTag(){
+		$choose = \YII::$app->request->get('choosetag');
+		$tags = new Tag();
+		$tag = $tags->getTag();
+		if($choose){
+			echo Json::encode($tag);
+		}
+		else{
+			$data = array(
+				"total"=>count($tag),
+				"rows"=>$tag
+			);
+			echo Json::encode($data);
+		}
+	}
+
+	public function actionCategory(){
+		$categoryList = new Category();
+		$category = $categoryList->Category;
+		$categoryName = $category['category_name'];
+
+		$data =  array();
+		$dataPa =array();
+
+		$order=1;
+		foreach($categoryName as $name=>$childName){
+			$dataCh =array();
+			if(empty($childName)){
+				$data['id'] = $order;
+				$data['text'] = $name;
+				$dataPa[] = $data;
+			}else {
+				$data['id'] = $order;
+				$data['text']= $name;
+//				$data['state']="closed";
+
+				for($i=0;$i<count($childName);$i++){
+					$dataChild = array();
+					$dataChild['id'] = $order.$i+1;
+					$dataChild['text'] = $childName[$i];
+					$dataCh[]=$dataChild;
+				}
+				$data['children']=$dataCh;
+				$dataPa[] =$data;
+			}
+			$order++;
+		}
+		echo Json::encode($dataPa);
+	}
+
+	public function actionSave()
+	{
+		$news = new News();
+		//NOT NULL
+		$news->news_title = \YII::$app->request->post('news_title');
+		$news->news_sump = \YII::$app->request->post('news_sump');
+		$news->news_summary = \YII::$app->request->post('news_summary');
+		$news->news_pic = \YII::$app->request->post('news_pic');
+		$news->news_content = \YII::$app->request->post('news_content');
+
+		$news->news_author = \YII::$app->request->post('news_author');
+		$news->news_editor = \YII::$app->request->post('news_editor');
+
+		$news->news_category = \YII::$app->request->post('news_category');
+
+		$news->news_source = \YII::$app->request->post('news_source');
+		$news->news_url = \YII::$app->request->post('news_url');
+		$news->news_date = date('Y-m-d H:i:s',time());
+
+		if($news->hasErrors()){
+			echo 'fail';
+			die;
+		}else{
+			$news->save();
+			echo 'success';
+		}
+	}
+
+	public function actionEdit(){
+
+
+	}
 }
