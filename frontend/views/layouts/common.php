@@ -16,16 +16,16 @@ use yii\helpers\Html;
     <meta name="description" content="<?= Html::encode($this->description) ?>">
     <meta name="keywords" content="<?= Html::encode($this->keywords) ?>">
 
-    <link rel="stylesheet" type="text/css" href="libs/css/papermashup.css">     <!--标签颜色-->
+    <link rel="stylesheet" type="text/css" href="frontend/libs/css/papermashup.css">     <!--标签颜色-->
 
-    <link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="common/libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!--        <script src="../views/layouts/js/jquery.min.js"></script>-->
-    <script src="libs/js/jquery.min.js" ></script>
-    <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="common/libs/js/jquery.min.js" ></script>
+    <script src="common/libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 
     <!--ToHead-->
-    <link href="libs/css/tohead.css" rel="stylesheet" type="text/css" />
-    <script src="libs/js/tohead.js"></script>
+    <link href="frontend/libs/css/tohead.css" rel="stylesheet" type="text/css" />
+    <script src="frontend/libs/js/tohead.js"></script>
 
     <style type="text/css">
         html{
