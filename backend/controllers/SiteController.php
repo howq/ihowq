@@ -1,5 +1,6 @@
 <?php
 namespace backend\controllers;
+use common\models\Tagnews;
 use yii\web\Controller;
 use common\models\News;
 use common\models\Category;
@@ -138,6 +139,27 @@ class SiteController extends Controller{
 			die;
 		}else{
 			$news->save();
+
+			$tag = new Tag();
+			$news_id_curr = $news->getNewsMaxId();			//保存文章标签项
+			$news_tags = \YII::$app->request->post('news_tags');
+			$tagsArr = explode(',',$news_tags);
+			for($index=0;$index<count($tagsArr);$index++){
+
+				$tag_news =new Tagnews();
+				$tagId = $tag->getTagId($tagsArr[$index]);
+				$tag_news->tag_id = $tagId;
+				$tag_news->news_id = $news_id_curr;
+				if($tag_news->hasErrors()){
+					//echo 'fail';
+					//die;
+				}else{
+					$tag_news->save();
+					//echo 'success';
+				}
+
+			}
+
 			echo 'success';
 		}
 	}

@@ -84,7 +84,7 @@ class SiteController extends Controller
         $view->params['newsMain']= $newsDetail;
         $view->params['categoryId'] = $categoryId;
         $view->params['tagId'] = $tagId;
-        $view->title = '白马公社';
+        $view->title = '白马工作室';
         $view->keywords = '马克思主义|科学共产主义|资本主义|中国史|世界史';
         $view->description = '白马公社是以科学马克思主义为思想和理论基础、致力于构建“大历史理论框架”的网络工作室，By Marx既与“白马”音近，又寓意“追随马克思”、“以马克思之名”，目前已着手进行马克思主义思想史、资本主义发展史、中国史与世界史三个主脉络的研读和梳理';
         $view->params['isMobile'] = $this->checkMobile();
@@ -170,6 +170,11 @@ class SiteController extends Controller
      */
     public function actionComment(){    //TODO add comment count to mysql
         ;
+    }
+
+    public function actionAbout(){
+        $this->actionLayouts();
+        return $this->render('about');
     }
 
     public function checkMobile(){

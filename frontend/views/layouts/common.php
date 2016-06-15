@@ -395,7 +395,7 @@ use yii\helpers\Html;
                 <span class="icon-bar"></span>
             </button>
             <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
-            <a href="index.php" class="navbar-brand " id="brand">白马公社</a>
+            <a href="index.php" class="navbar-brand " id="brand">白马工作室</a>
         </div>
 
         <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
@@ -433,7 +433,7 @@ use yii\helpers\Html;
                 }
                 ?>
 
-                <li><a href="#">关于我们</a></li>
+                <li><a href="index.php?r=site/about">关于我们</a></li>
                 <li><a href="#">联系我们</a></li>
             </ul>
             <div class="col-md-1 navbar-right"></div>
@@ -563,7 +563,7 @@ use yii\helpers\Html;
 </div>
 <!--<footer class="footer" style="margin-top: 5px">-->
 <!--    <div class="container">-->
-<!--        <p class="pull-left">&copy; 白马公社 --><?//= date('Y') ?><!--</p>-->
+<!--        <p class="pull-left">&copy; 白马工作室 --><?//= date('Y') ?><!--</p>-->
 <!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
 <!--    </div>-->
 <!--</footer>-->

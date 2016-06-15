@@ -34,10 +34,10 @@ class News extends \yii\db\ActiveRecord
     const NEWSNUM = 10;     //每回加载10条文章
     const NEWSEDIT = 50;
 
-    public function getMaxId(){
+    public function getNewsMaxId(){
         $sql = 'SELECT news_id FROM news ORDER BY news_id DESC LIMIT 1';
         $news = News::findBySql($sql)->all();
-        return $news;
+        return $news[0]['news_id'];
     }
 
     //获取10条新闻（Phone:标题+图片+摘要 PC:图片+标题+作者+来源+时间+摘要+分享+评论+浏览）
@@ -47,12 +47,6 @@ class News extends \yii\db\ActiveRecord
         $news = News::findBySql($sql)->all();
         return $news;
     }
-//    public function getNewsIndex(){
-//        $sql = 'SELECT news_id,news_pic,news_title,news_summary,browse_count,comment_count FROM news
-//                ORDER BY news_id DESC LIMIT '.self::NEWSNUM;
-//        $news = News::findBySql($sql)->all();
-//        return $news;
-//    }
 
     //获取10条新闻
     public function getNews($currNewsId){

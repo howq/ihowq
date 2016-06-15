@@ -70,6 +70,15 @@ class Tag extends \yii\db\ActiveRecord
         }
 
     }
+    public function getTagMaxId(){
+        $sql = 'SELECT tag_id FROM tag ORDER BY tag_id DESC LIMIT 1';
+        $tag = Tag::findBySql($sql)->all();
+        if(!count($tag)){
+            return null;
+        }else{
+            return $tag[0]['tag_id'];
+        }
+    }
 
     public function getNewsByTagId($tagId,$maxId){
         $sql = 'SELECT news.news_id,news_pic,news_title,news_summary,browse_count,comment_count FROM news,tagnews,tag
