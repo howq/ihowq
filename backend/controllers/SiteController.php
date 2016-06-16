@@ -151,8 +151,8 @@ class SiteController extends Controller{
 				$tag_news->tag_id = $tagId;
 				$tag_news->news_id = $news_id_curr;
 				if($tag_news->hasErrors()){
-					//echo 'fail';
-					//die;
+					echo 'fail';
+					return;
 				}else{
 					$tag_news->save();
 					//echo 'success';
@@ -164,8 +164,57 @@ class SiteController extends Controller{
 		}
 	}
 
-	public function actionEdit(){
+	public function actionRemove_tag(){
 
-
+		$tag_id = \YII::$app->request->post('tag_id');
+		$tag = Tag::findOne($tag_id);
+		if($tag->delete()){
+			echo 'success';
+		}
+		else{
+			echo 'fail';
+		}
 	}
+
+	public function actionSave_tag()
+	{
+		$type = \YII::$app->request->post('type');
+		$data = \YII::$app->request->post('data');
+		$dataArr = Json::decode($data);
+		if($type){		//新增
+			$tag = new Tag();
+			$tag->tag_name = $dataArr[0]["tag_name"];
+			if($tag->hasErrors()){
+				echo 'fail';
+				die;
+			}else {
+				$tag->save();
+				echo 'success';
+			}
+
+		}else{			//修改
+			$tag2 = Tag::findOne($dataArr[0]["tag_id"]);
+			$tag2->tag_name = $dataArr[0]["tag_name"];
+			if($tag2->hasErrors()){
+				echo 'fail';
+				die;
+			}else {
+				$tag2->save();
+				echo 'success';
+			}
+		}
+	}
+
+	public function actionRemove_news()
+	{
+		$news_id = \YII::$app->request->post('news_id');
+		$news = News::findOne($news_id);
+		if($news->delete()){
+			echo 'success';
+		}
+		else{
+			echo 'fail';
+		}
+	}
+
 }

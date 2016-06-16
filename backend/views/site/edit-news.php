@@ -59,7 +59,27 @@
         }
     }
     function removeNews(){
-
+        var data = $("#grid-news").datagrid('getSelected');
+        var index=$('#grid-news').datagrid('getRowIndex',data);
+        $('#grid-news').datagrid('deleteRow',index);
+        $.ajax({
+            url:"index.php?r=site/remove_news",
+            type:'POST',
+            data:{
+                news_id:data.news_id
+            },
+            success: function (data) {
+                if('success'==data){
+                    alert('删除成功!');
+                }
+                else if('fail'==data){
+                    alert('删除失败!');
+                }
+            },
+            error: function () {
+                alert("服务器内部出错，删除失败!");
+            }
+        });
     }
 
     var check = {

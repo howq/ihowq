@@ -6,47 +6,206 @@
  * Time: 23:28
  */
 ?>
+<script language="JavaScript" src="libs/JSON-js/json2.js"></script>
 <!--Tag-->
-<table id="toolbar" id="actions" style="width:320px; margin-bottom: 10px">
-    <tr>
-        <td style="width:100%;">
-            <a class="easyui-linkbutton" onclick="addRow()" data-options="iconCls:'icon-add'">增加</a>
-            <a class="easyui-linkbutton" onclick="editRow()" data-options="iconCls:'icon-edit'">修改</a>
-            <a class="easyui-linkbutton" onclick="removeit()" data-options="iconCls:'icon-remove'">删除</a>
-
-            <span style="margin-left: 20px;font-weight: bold">选择模式</span>
-            <select onchange="$('#grid-tag').datagrid({singleSelect:(this.value==0)})">
-                <option value="0">单选</option>
-                <option value="1">多选</option>
-            </select>
-        </td>
-    </tr>
-</table>
+<!--<table id="toolbar" id="actions" style="width:320px; margin-bottom: 10px">-->
+<!--    <tr>-->
+<!--        <td style="width:100%;">-->
+<!--            <a class="easyui-linkbutton" onclick="addTag()" data-options="iconCls:'icon-add'">增加</a>-->
+<!--            <a class="easyui-linkbutton" onclick="editTag()" data-options="iconCls:'icon-edit'">修改</a>-->
+<!--            <a class="easyui-linkbutton" onclick="removeTag()" data-options="iconCls:'icon-remove'">删除</a>-->
+<!---->
+<!--            <span style="margin-left: 20px;font-weight: bold">选择模式</span>-->
+<!--            <select onchange="$('#grid-tag').datagrid({singleSelect:(this.value==0)})">-->
+<!--                <option value="0">单选</option>-->
+<!--                <option value="1">多选</option>-->
+<!--            </select>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
 
 <!--toolbar="#toolbar"-->
-<table id="grid-tag" title="标签编辑" class="easyui-datagrid" style="width: 320px" data-options="
-                url:'index.php?r=site/tag',
-                method:'get',
-                singleSelect:true,
-                collapsible:true,
-                iconCls:'icon-edit',
-			    pagination:true,
-			    pageSize:10">
-    <thead>
-    <tr>
-        <th data-options="field:'ck',checkbox:true"></th>
-        <th data-options="field:'tag_id',width:0" class="hidden"></th>
-        <th data-options="field:'tag_name',width:100">标签名</th>
-    </tr>
-    </thead>
+<!--<table id="grid-tag" title="标签编辑" class="easyui-datagrid" style="width: 320px" data-options="-->
+<!--                url:'index.php?r=site/tag',-->
+<!--                method:'get',-->
+<!--                singleSelect:true,-->
+<!--                collapsible:true,-->
+<!--                iconCls:'icon-edit',-->
+<!--			    pagination:true,-->
+<!--			    pageSize:10"-->
+<!-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th data-options="field:'ck',checkbox:true"></th>-->
+<!--        <th data-options="field:'tag_id',width:0" class="hidden"></th>-->
+<!--        <th data-options="field:'tag_name',width:100">标签名</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--</table>-->
+<table id="grid-tag">
 </table>
 
+
 <script>
-    function removeit(){
-        if (editIndex == undefined){return}
-        $('#dg').datagrid('cancelEdit', editIndex)
-            .datagrid('deleteRow', editIndex);
-        editIndex = undefined;
+   var editRow = undefined;
+   var isEditTag = false;
+
+   $("#grid-tag").datagrid({
+            height: 300,
+            width: 320,
+            title: '标签编辑',
+            collapsible: true,
+            singleSelect: true,
+            url: 'index.php?r=site/tag',
+            method:'get',
+            iconCls:'icon-edit',
+            pagination:true,
+            pageSize:10,
+            idField: 'tag_id',
+            columns: [[
+                { field: 'tag_id', title: 'ID', width: 140},
+                { field: 'tag_name', title: '标签名称', width: 180, editor: { type: 'text', options: { required: true } } },
+            ]],
+            toolbar: [ {
+                text: '保存', iconCls: 'icon-save', handler: function () {
+                    saveTag();
+                }
+            }, '-', {
+                text: '添加', iconCls: 'icon-add', handler: function () {
+                    addTag();
+                }
+            }, '-', {
+                text: '删除', iconCls: 'icon-remove', handler: function () {
+                    removeTag();
+                }
+            }, '-', {
+                text: '修改', iconCls: 'icon-edit', handler: function () {
+                    editTag();
+                }
+            }, '-',{
+                text: '撤销', iconCls: 'icon-redo', handler: function () {
+                    editRow = undefined;
+                    $("#grid-tag").datagrid('rejectChanges');
+                    $("#grid-tag").datagrid('unselectAll');
+                    if(isEditTag){
+                        isEditTag=false;
+                    }else
+                        isEditTag = true;
+                }
+            }],
+            onAfterEdit: function (rowIndex, rowData, changes) {
+                editRow = undefined;
+            },
+            onDblClickRow:function (rowIndex, rowData) {
+                if (editRow != undefined) {
+                    $("#grid-tag").datagrid('endEdit', editRow);
+                }
+
+                if (editRow == undefined) {
+                    $("#grid-tag").datagrid('beginEdit', rowIndex);
+                    editRow = rowIndex;
+                }
+            },
+            onClickRow:function(rowIndex,rowData){
+                if (editRow != undefined) {
+                    $("#grid-tag").datagrid('endEdit', editRow);
+
+                }
+
+            }
+
+        });
+
+
+   function saveTag() {
+        $("#grid-tag").datagrid('endEdit', editRow);
+
+        //如果调用acceptChanges(),使用getChanges()则获取不到编辑和新增的数据。
+
+        //使用JSON序列化datarow对象，发送到后台。
+       var rows = $("#grid-tag").datagrid('getChanges');
+       var rowstr = JSON.stringify(rows);
+       var type = 1;    //新增
+       if(isEditTag){
+           type = 0;   //修改
+       }
+       $.ajax({
+           url:"index.php?r=site/save_tag",
+           type:'POST',
+           data:{
+               type:type,
+               data:rowstr
+           },
+           success: function (data) {
+               if('success'==data){
+                   alert('保存成功!');
+
+                   $("#grid-tag").datagrid('reload');       //刷新数据
+               }
+               else if('fail'==data){
+                   alert('保存失败!');
+               }
+           },
+           error: function () {
+               alert("服务器内部出错，保存失败!");
+           }
+       });
+   }
+
+   function addTag(){
+        if (editRow != undefined) {
+            $("#grid-tag").datagrid('endEdit', editRow);
+        }
+        if (editRow == undefined) {
+            $("#grid-tag").datagrid('insertRow', {
+                index: 0,
+                row: {}
+            });
+            $("#grid-tag").datagrid('beginEdit', 0);
+            editRow = 0;
+            isEditTag = false;
+        }
+   }
+   function editTag(){
+        var row = $("#grid-tag").datagrid('getSelected');
+        if (row !=null) {
+            if (editRow != undefined) {
+                $("#grid-tag").datagrid('endEdit', editRow);
+            }
+
+            if (editRow == undefined) {
+                var index = $("#grid-tag").datagrid('getRowIndex', row);
+                $("#grid-tag").datagrid('beginEdit', index);
+                editRow = index;
+                $("#grid-tag").datagrid('unselectAll');
+            }
+            isEditTag=true;
+        } else {
+            alert("请选择修改项");
+        }
+   }
+    function removeTag(){
+        var data = $("#grid-tag").datagrid('getSelected');
+        var index=$('#grid-tag').datagrid('getRowIndex',data);
+        $('#grid-tag').datagrid('deleteRow',index);
+        $.ajax({
+            url:"index.php?r=site/remove_tag",
+            type:'POST',
+            data:{
+                tag_id:data.tag_id
+            },
+            success: function (data) {
+                if('success'==data){
+                    alert('删除成功!');
+                }
+                else if('fail'==data){
+                    alert('删除失败!');
+                }
+            },
+            error: function () {
+                alert("服务器内部出错，删除失败!");
+            }
+        });
     }
 </script>
 
