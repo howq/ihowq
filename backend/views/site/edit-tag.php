@@ -12,7 +12,7 @@
         <td style="width:100%;">
             <a class="easyui-linkbutton" onclick="addRow()" data-options="iconCls:'icon-add'">增加</a>
             <a class="easyui-linkbutton" onclick="editRow()" data-options="iconCls:'icon-edit'">修改</a>
-            <a class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删除</a>
+            <a class="easyui-linkbutton" onclick="removeit()" data-options="iconCls:'icon-remove'">删除</a>
 
             <span style="margin-left: 20px;font-weight: bold">选择模式</span>
             <select onchange="$('#grid-tag').datagrid({singleSelect:(this.value==0)})">
@@ -40,6 +40,15 @@
     </tr>
     </thead>
 </table>
+
+<script>
+    function removeit(){
+        if (editIndex == undefined){return}
+        $('#dg').datagrid('cancelEdit', editIndex)
+            .datagrid('deleteRow', editIndex);
+        editIndex = undefined;
+    }
+</script>
 
 <script>
     $.parser.parse();
