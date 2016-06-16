@@ -109,12 +109,12 @@
 <script type="text/javascript">
     var page = {
         news_id:-1,
-        isEditNews:false,
+        type:0,     //0表示添加 1表示修改
         Init:function () {
             var url = window.location.href;
             var str1 = url.split('&');
             if(2==str1.length){
-                this.isEditNews=true;
+                this.type=1;
                 var str2 = str1[1].split('=');
                 this.news_id = str2[1];
                 this.LoadEditNews();
@@ -205,12 +205,13 @@
             var categoryId = n.id;
         }
         var tags = $("#news_tags").combobox("getText");
-
+        var tagValues = $("#news_tags").combobox("getValues");
         $.ajax({
-            url: "index.php?r=site/save_news&type=news",
+            url: "index.php?r=site/save_news&type="+page.type,
 //            dataType: "json",
             type: "post",
             data: {
+                news_id:page.news_id,
                 news_title: $("#news_title").val(),
                 news_sump: $("#news_sump").val(),
                 news_summary: $("#news_summary").val(),
@@ -219,7 +220,7 @@
                 news_author: $("#news_author").val(),
                 news_editor: $("#news_editor").val(),
                 news_category: categoryId,
-                news_tags: tags,
+                news_tags: tagValues,
                 news_source: $("#news_source").val(),
                 news_url: $("#news_url").val(),
             },
@@ -228,6 +229,9 @@
                     alert('上传成功!');
                     document.getElementById("form").reset();
                     editor.setData("");
+                    if(page.type){
+                        CloseWebPage();
+                    }
                 }
                 else if('fail'==data){
                     alert('上传格式错误!');
@@ -239,6 +243,24 @@
         });
     }
 
+    function CloseWebPage(){
+        if (navigator.userAgent.indexOf("MSIE") > 0) {
+            if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
+                window.opener = null;
+                window.close();
+            } else {
+                window.open('', '_top');
+                window.top.close();
+            }
+        }
+        else if (navigator.userAgent.indexOf("Firefox") > 0) {
+            window.location.href = 'about:blank ';
+        } else {
+            window.opener = null;
+            window.open('', '_self', '');
+            window.close();
+        }
+    }
 </script>
 
 </body>

@@ -118,7 +118,54 @@ class SiteController extends Controller{
 
 	public function actionSave_news()
 	{
-		$news = new News();
+        $type = \YII::$app->request->get('type');
+        $news_id = \YII::$app->request->post('news_id');
+        if($type){      ////0表示添加 1表示修改
+            $news = News::findOne($news_id);
+
+            $news->news_title = \YII::$app->request->post('news_title');
+            $news->news_sump = \YII::$app->request->post('news_sump');
+            $news->news_summary = \YII::$app->request->post('news_summary');
+            $news->news_pic = \YII::$app->request->post('news_pic');
+            $news->news_content = \YII::$app->request->post('news_content');
+
+            $news->news_author = \YII::$app->request->post('news_author');
+            $news->news_editor = \YII::$app->request->post('news_editor');
+
+            $news->news_category = \YII::$app->request->post('news_category');
+
+            $news->news_source = \YII::$app->request->post('news_source');
+            $news->news_url = \YII::$app->request->post('news_url');
+            $news->news_date = date('Y-m-d H:i:s',time());
+
+            if($news->hasErrors()){
+                echo 'fail';
+                die;
+            }else{
+                $news->save();
+
+                //删除原有的tagnews
+                Tagnews::deleteAll('news_id = :newsId',[':newsId'=>$news_id]);
+
+                $news_tags = \YII::$app->request->post('news_tags');
+                for($index=0;$index<count($news_tags);$index++){
+                    $tag_news =new Tagnews();
+                    $tag_news->tag_id = $news_tags[$index];
+                    $tag_news->news_id = $news_id;
+                    if($tag_news->hasErrors()){
+                        echo 'fail';
+                        return;
+                    }else{
+                        $tag_news->save();
+                    }
+                }
+
+                echo 'success';
+            }
+            return;
+        }
+
+		$news = new News();     //新增
 		//NOT NULL
 		$news->news_title = \YII::$app->request->post('news_title');
 		$news->news_sump = \YII::$app->request->post('news_sump');
@@ -141,24 +188,18 @@ class SiteController extends Controller{
 		}else{
 			$news->save();
 
-			$tag = new Tag();
 			$news_id_curr = $news->getNewsMaxId();			//保存文章标签项
 			$news_tags = \YII::$app->request->post('news_tags');
-			$tagsArr = explode(',',$news_tags);
-			for($index=0;$index<count($tagsArr);$index++){
-
+			for($index=0;$index<count($news_tags);$index++){
 				$tag_news =new Tagnews();
-				$tagId = $tag->getTagId($tagsArr[$index]);
-				$tag_news->tag_id = $tagId;
+                $tag_news->tag_id = $news_tags[$index];
 				$tag_news->news_id = $news_id_curr;
 				if($tag_news->hasErrors()){
 					echo 'fail';
 					return;
 				}else{
 					$tag_news->save();
-					//echo 'success';
 				}
-
 			}
 
 			echo 'success';
