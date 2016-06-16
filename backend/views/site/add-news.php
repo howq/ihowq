@@ -107,6 +107,69 @@
 </div>
 
 <script type="text/javascript">
+    var page = {
+        news_id:-1,
+        isEditNews:false,
+        Init:function () {
+            var url = window.location.href;
+            var str1 = url.split('&');
+            if(2==str1.length){
+                this.isEditNews=true;
+                var str2 = str1[1].split('=');
+                this.news_id = str2[1];
+                this.LoadEditNews();
+            }
+        },
+        LoadEditNews:function () {
+            $.ajax({
+                url:"index.php?r=site/load_news&news_id="+this.news_id,
+                type:'POST',
+                data:{
+                    news_id:this.news_id
+                },
+                success: function (data) {
+                    var news_tags = JSON.parse(data);
+                    var newsArr = JSON.parse(news_tags['news']);
+                    var tagObj = JSON.parse(news_tags['tags']);     //标签对象数组
+
+                    $('#news_title').val(newsArr['news_title']);
+                    $('#news_sump').val(newsArr['news_sump']);
+                    $('#news_summary').val(newsArr['news_summary']);
+                    $('#news_pic').val(newsArr['news_pic']);
+                    $('#news_content').val(newsArr['news_content']);
+                    $('#news_author').val(newsArr['news_author']);
+                    $('#news_editor').val(newsArr['news_editor']);
+                    $('#news_source').val(newsArr['news_source']);
+                    $('#news_url').val(newsArr['news_url']);
+                    //目录和标签需调整
+                    $('#news_category').combotree({
+                        onLoadSuccess:function (data) {
+                            $('#news_category').combotree('setValue',newsArr['news_category']);
+                        }
+                    });
+
+                    if(0!=tagObj.length){
+                        var i;
+                        var tagArr = new Array();
+                        for(i=0;i<tagObj.length;i++){
+                            tagArr.push(tagObj[i]['tag_id']);
+                        }
+
+                        $('#news_tags').combobox({
+                            onLoadSuccess:function (data) {
+                                $('#news_tags').combobox("setValues",tagArr);
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    alert("加载数据失败!");
+                }
+            });
+        }
+    }
+    page.Init();
+
     var editor = CKEDITOR.replace( 'news_content' );
     CKFinder.setupCKEditor( editor );               //CKeditor
 
@@ -144,7 +207,7 @@
         var tags = $("#news_tags").combobox("getText");
 
         $.ajax({
-            url: "index.php?r=site/save&type=news",
+            url: "index.php?r=site/save_news&type=news",
 //            dataType: "json",
             type: "post",
             data: {

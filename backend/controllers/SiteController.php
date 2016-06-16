@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 use common\models\Tagnews;
+use yii\db\Query;
 use yii\web\Controller;
 use common\models\News;
 use common\models\Category;
@@ -115,7 +116,7 @@ class SiteController extends Controller{
 		echo Json::encode($dataPa);
 	}
 
-	public function actionSave()
+	public function actionSave_news()
 	{
 		$news = new News();
 		//NOT NULL
@@ -216,5 +217,20 @@ class SiteController extends Controller{
 			echo 'fail';
 		}
 	}
+
+	public function actionLoad_news()
+	{
+		$news_id = \YII::$app->request->get('news_id');
+		$news = News::findOne($news_id);
+        $data = array('news'=>Json::encode($news));
+        $query = new Query();
+        $tagnews = $query->select(['tag_id'])->from('tagnews')->where(['news_id'=>$news_id])->all();
+        $data['tags'] = Json::encode($tagnews);
+		echo json_encode($data);
+	}
+
+    public function actionGet_tags(){
+
+    }
 
 }

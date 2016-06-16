@@ -77,7 +77,7 @@
         tagId:0,
         lastId:0,
         isMobile:false,
-        Init:function(){
+        Init:function(){        //解析url
             var url = $(".news-title:last").attr("href");
             var str = url.split('=');
             var addr = str[0]+'='+str[1]+'=';
