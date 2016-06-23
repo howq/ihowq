@@ -60,7 +60,7 @@
                             '.$user.'
                             '.$tags.'
                             <span class="hidden-xs"><i class="glyphicon glyphicon-time" ></i>'.date("Y-m-d", strtotime($newsMain['news_date'])).'</span>
-                            <span class="item-view"><i class="glyphicon glyphicon-eye-open"></i>'.$newsMain['browse_count'].'</span>
+                            <span class="item-view hidden-xs"><i class="glyphicon glyphicon-eye-open"></i>'.$newsMain['browse_count'].'</span>
                             '.$comment.'
                         </p>
                     </div>

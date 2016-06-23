@@ -302,7 +302,7 @@ use yii\helpers\Html;
                 width: 60%;
             }
             .news-main{
-                height:28vh;
+                height:26vh;
                 background-color: #ffffff;
                 /*margin: 2vh 0;*/
                 margin: 1px 0;
@@ -313,7 +313,7 @@ use yii\helpers\Html;
             }
 
             .pic-parent{
-                width: 28%;
+                width: 29%;
                 height:24vh;
                 padding: 1.5vh 0 0.8vh 0;
                 text-align:center;
@@ -329,7 +329,7 @@ use yii\helpers\Html;
                 border-radius:0;
             }
             .news-content{
-                width: 72%;
+                width: 71%;
                 height:24vh;
                 padding-left:18px;
                 font-size: 10px;
@@ -434,7 +434,7 @@ use yii\helpers\Html;
                 ?>
 
                 <li><a href="index.php?r=site/about">关于我们</a></li>
-                <li><a href="#">联系我们</a></li>
+<!--                <li><a href="#">联系我们</a></li>-->
             </ul>
             <div class="col-md-1 navbar-right"></div>
             <form class="navbar-form navbar-right" role="search">
