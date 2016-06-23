@@ -136,7 +136,7 @@
                     $('#news_sump').val(newsArr['news_sump']);
                     $('#news_summary').val(newsArr['news_summary']);
                     $('#news_pic').val(newsArr['news_pic']);
-                    $('#news_content').val(newsArr['news_content']);
+
                     $('#news_author').val(newsArr['news_author']);
                     $('#news_editor').val(newsArr['news_editor']);
                     $('#news_source').val(newsArr['news_source']);
@@ -161,6 +161,9 @@
                             }
                         });
                     }
+
+                    editor.setData(newsArr['news_content']);
+//                    $('#news_content').val(newsArr['news_content']);
                 },
                 error: function () {
                     alert("加载数据失败!");
@@ -168,10 +171,11 @@
             });
         }
     }
-    page.Init();
 
     var editor = CKEDITOR.replace( 'news_content' );
     CKFinder.setupCKEditor( editor );               //CKeditor
+
+    page.Init();
 
     var right = {        //内容字数结构体
         title:12,

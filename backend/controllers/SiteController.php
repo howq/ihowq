@@ -136,7 +136,7 @@ class SiteController extends Controller{
 
             $news->news_source = \YII::$app->request->post('news_source');
             $news->news_url = \YII::$app->request->post('news_url');
-            $news->news_date = date('Y-m-d H:i:s',time());
+//            $news->news_date = date('Y-m-d H:i:s',time());
 
             if($news->hasErrors()){
                 echo 'fail';

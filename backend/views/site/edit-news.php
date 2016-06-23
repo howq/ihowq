@@ -55,7 +55,7 @@
 
     function editNews(){
         if(check.isOkAlter()){
-            window.open("index.php?r=site/addnews&editId="+check.editId);
+            window.open("index.php?r=site/addnews&news_id="+check.editId);
         }
     }
     function removeNews(){
