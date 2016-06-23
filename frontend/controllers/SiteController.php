@@ -18,8 +18,7 @@ class SiteController extends Controller
      */
     public function MaxNewsId(){
         $newsList = new News();
-        $news = $newsList->maxId;
-        return $news[0]['news_id']+1;
+        return $newsList->getNewsMaxId()+1;
     }
 
     /**
