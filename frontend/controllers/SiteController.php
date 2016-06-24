@@ -83,8 +83,8 @@ class SiteController extends Controller
         $view->params['newsMain']= $newsDetail;
         $view->params['categoryId'] = $categoryId;
         $view->params['tagId'] = $tagId;
-        $view->title = '零和壹之外的世界';
-        $view->keywords = '编程|计算机|软件|代码';
+        $view->title = '剑指零壹';
+        $view->keywords = '编程|计算机|软件|代码|网络';
         $view->description = '沉寂于0和1的世界中,探索0与1之外的真理';
         $view->params['isMobile'] = $this->checkMobile();
         return $this->render('index');
