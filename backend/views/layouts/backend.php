@@ -15,17 +15,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>后台管理</title>
 
-    <link href="../../common/libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <script src="../../common/libs/js/jquery.min.js"></script>
-    <script src="../../common/libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <link href="common/libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="common/libs/js/jquery.min.js"></script>
+    <script src="common/libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="libs/jquery-easyui-1.4.4/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="libs/jquery-easyui-1.4.4/themes/icon.css">
-    <script src="libs/jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="backend/web/libs/jquery-easyui-1.4.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="backend/web/libs/jquery-easyui-1.4.4/themes/icon.css">
+    <script src="backend/web/libs/jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
 
     <!--引入ckeditor-->
-    <script src="libs/ckeditor/ckeditor.js"></script>
-    <script src="libs/ckfinder/ckfinder.js"></script>
+    <script src="backend/web/libs/ckeditor/ckeditor.js"></script>
+    <script src="backend/web/libs/ckfinder/ckfinder.js"></script>
 
     <style type="text/css">
         /*#main{*/
