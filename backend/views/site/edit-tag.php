@@ -26,7 +26,7 @@
 
 <!--toolbar="#toolbar"-->
 <!--<table id="grid-tag" title="标签编辑" class="easyui-datagrid" style="width: 320px" data-options="-->
-<!--                url:'index.php?r=site/tag',-->
+<!--                url:'admin.php?r=site/tag',-->
 <!--                method:'get',-->
 <!--                singleSelect:true,-->
 <!--                collapsible:true,-->
@@ -56,7 +56,7 @@
             title: '标签编辑',
             collapsible: true,
             singleSelect: true,
-            url: 'index.php?r=site/tag',
+            url: 'admin.php?r=site/tag',
             method:'get',
             iconCls:'icon-edit',
             pagination:true,
@@ -130,7 +130,7 @@
            type = 0;   //修改
        }
        $.ajax({
-           url:"index.php?r=site/save_tag",
+           url:"admin.php?r=site/save_tag",
            type:'POST',
            data:{
                type:type,
@@ -189,7 +189,7 @@
         var index=$('#grid-tag').datagrid('getRowIndex',data);
         $('#grid-tag').datagrid('deleteRow',index);
         $.ajax({
-            url:"index.php?r=site/remove_tag",
+            url:"admin.php?r=site/remove_tag",
             type:'POST',
             data:{
                 tag_id:data.tag_id
@@ -356,7 +356,7 @@
 
     function getData(){
         $.ajax({
-            url: "index.php?r=site/tag",
+            url: "admin.php?r=site/tag",
             data: {},
             dataType: "json",
             type:"post",

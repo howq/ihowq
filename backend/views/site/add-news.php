@@ -7,6 +7,9 @@
  */
 ?>
 
+<link rel="stylesheet" href="common/libs/editor/css/editormd.css" />
+<link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+
 <style type="text/css">
     textarea{
         height: 10vh;
@@ -49,9 +52,11 @@
                     <input type="text" class="form-control" id="news_pic" maxlength="100" placeholder="首页图片URL">
                 </div>
             </div>
-            <div class="form-group col-md-12"  style="padding: 0 30px;">
-                <textarea id="news_content" cols="20" rows="2" class="ckeditor col-md-12"></textarea>
-            </div>
+
+<!--            CKeditor编辑器-->
+<!--            <div class="form-group col-md-12"  style="padding: 0 30px;">-->
+<!--                <textarea id="news_content" cols="20" rows="2" class="ckeditor col-md-12"></textarea>-->
+<!--            </div>-->
 
 
         </div>
@@ -72,14 +77,14 @@
             <div class="form-group col-md-12" style="padding: 0 30px;">
                 <label class="col-md-12 control-label">目录</label>
                 <select id="news_category" class="easyui-combotree col-md-12" style="width:100%"
-                        data-options="url:'index.php?r=site/category',required:false">
+                        data-options="url:'admin.php?r=site/category',required:false">
                 </select>
             </div>
 
             <div class="form-group col-md-12" style="padding: 0 30px;">
                 <label class="col-md-12 control-label">标签</label>
                 <input id="news_tags" class="easyui-combobox" name="dept" style="width:100%"
-                       data-options="valueField:'tag_id',textField:'tag_name',url:'index.php?r=site/tag&choosetag=1',multiple:true" />
+                       data-options="valueField:'tag_id',textField:'tag_name',url:'admin.php?r=site/tag&choosetag=1',multiple:true" />
             </div>
 
             <div class="form-group col-md-12">
@@ -95,6 +100,40 @@
                 </div>
             </div>
         </div>
+        <!--            MarkDown编辑器-->
+        <div class="col-md-12">
+            <div class="btns">
+                <input id="goto-line-btn" type="button" value="Goto line 90">
+                <input id="show-btn" type="button" value="Show editor">
+                <input id="hide-btn" type="button" value="Hide editor">
+                <input id="get-md-btn" type="button" value="Get Markdown">
+                <input id="get-html-btn" type="button" value="Get HTML">
+                <input id="watch-btn" type="button" value="Watch">
+                <input id="unwatch-btn" type="button" value="Unwatch">
+                <input id="preview-btn" type="button" value="Preview HTML (Press Shift + ESC cancel)">
+                <input id="fullscreen-btn" type="button" value="Fullscreen (Press ESC cancel)">
+                <input id="show-toolbar-btn" type="button" value="Show toolbar">
+                <input id="close-toolbar-btn" type="button" value="Hide toolbar">
+                <input id="toc-menu-btn" type="button" value="ToC Dropdown menu">
+                <input id="toc-default-btn" type="button" value="ToC default">
+
+<!--                <button id="goto-line-btn">Goto line 90</button>-->
+<!--                <button id="show-btn">Show editor</button>-->
+<!--                <button id="hide-btn">Hide editor</button>-->
+<!--                <button id="get-md-btn">Get Markdown</button>-->
+<!--                <button id="get-html-btn">Get HTML</button>-->
+<!--                <button id="watch-btn">Watch</button>-->
+<!--                <button id="unwatch-btn">Unwatch</button>-->
+<!--                <button id="preview-btn">Preview HTML (Press Shift + ESC cancel)</button>-->
+<!--                <button id="fullscreen-btn">Fullscreen (Press ESC cancel)</button>-->
+<!--                <button id="show-toolbar-btn">Show toolbar</button>-->
+<!--                <button id="close-toolbar-btn">Hide toolbar</button>-->
+<!--                <button id="toc-menu-btn">ToC Dropdown menu</button>-->
+<!--                <button id="toc-default-btn">ToC default</button>-->
+            </div>
+            <div id="news_content"></div>
+
+        </div>
     </form>
     <div class="form-group col-md-12" style="margin-top: 10px;margin-right: 5px">
         <div class="col-md-offset-11 col-md-1">
@@ -102,9 +141,116 @@
         </div>
     </div>
 
-
-
 </div>
+
+<script src="common/libs/editor/editormd.min.js"></script>
+<script type="text/javascript">
+
+    var testEditor;
+
+    $(function() {
+
+        $.get('test.md', function(md){
+            testEditor = editormd("news_content", {
+                width: "90%",
+                height: 740,
+                path : 'common/libs/editor/lib/',
+                theme : "dark",
+                previewTheme : "dark",
+                editorTheme : "pastel-on-dark",
+                markdown : md,
+                codeFold : true,
+                //syncScrolling : false,
+                saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+                searchReplace : true,
+                watch : false,                // 关闭实时预览
+                htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启
+                //toolbar  : false,             //关闭工具栏
+                //previewCodeHighlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
+                emoji : true,
+                taskList : true,
+                tocm            : true,         // Using [TOCM]
+                tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+                flowChart : true,             // 开启流程图支持，默认关闭
+                sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+                //dialogLockScreen : false,   // 设置弹出层对话框不锁屏，全局通用，默认为true
+                //dialogShowMask : false,     // 设置弹出层对话框显示透明遮罩层，全局通用，默认为true
+                //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
+                //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
+                //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "./php/upload.php",
+                onload : function() {
+                    console.log('onload', this);
+                    //this.fullscreen();
+                    //this.unwatch();
+                    //this.watch().fullscreen();
+
+                    //this.setMarkdown("#PHP");
+                    //this.width("100%");
+                    //this.height(480);
+                    //this.resize("100%", 640);
+                }
+            });
+        });
+
+        $("#goto-line-btn").bind("click", function(){
+            testEditor.gotoLine(90);
+        });
+
+        $("#show-btn").bind('click', function(){
+            testEditor.show();
+        });
+
+        $("#hide-btn").bind('click', function(){
+            testEditor.hide();
+        });
+
+        $("#get-md-btn").bind('click', function(){
+            alert(testEditor.getMarkdown());
+        });
+
+        $("#get-html-btn").bind('click', function() {
+            alert(testEditor.getHTML());
+        });
+
+        $("#watch-btn").bind('click', function() {
+            testEditor.watch();
+        });
+
+        $("#unwatch-btn").bind('click', function() {
+            testEditor.unwatch();
+        });
+
+        $("#preview-btn").bind('click', function() {
+            testEditor.previewing();
+        });
+
+        $("#fullscreen-btn").bind('click', function() {
+            testEditor.fullscreen();
+        });
+
+        $("#show-toolbar-btn").bind('click', function() {
+            testEditor.showToolbar();
+        });
+
+        $("#close-toolbar-btn").bind('click', function() {
+            testEditor.hideToolbar();
+        });
+
+        $("#toc-menu-btn").click(function(){
+            testEditor.config({
+                tocDropdown   : true,
+                tocTitle      : "目录 Table of Contents",
+            });
+        });
+
+        $("#toc-default-btn").click(function() {
+            testEditor.config("tocDropdown", false);
+        });
+    });
+</script>
 
 <script type="text/javascript">
     var page = {
@@ -122,7 +268,7 @@
         },
         LoadEditNews:function () {
             $.ajax({
-                url:"index.php?r=site/load_news&news_id="+this.news_id,
+                url:"admin.php?r=site/load_news&news_id="+this.news_id,
                 type:'POST',
                 data:{
                     news_id:this.news_id
@@ -172,8 +318,8 @@
         }
     }
 
-    var editor = CKEDITOR.replace( 'news_content' );
-    CKFinder.setupCKEditor( editor );               //CKeditor
+//    var editor = CKEDITOR.replace( 'news_content' );
+//    CKFinder.setupCKEditor( editor );               //CKeditor
 
     page.Init();
 
@@ -203,6 +349,9 @@
 //        if(!check.ts()){
 //            return;
 //        }
+        var md_content = testEditor.getMarkdown();
+        var html_content = testEditor.getHTML();
+
         var t = $('#news_category').combotree('tree'); // 得到树对象
         var n = t.tree('getSelected'); // 得到选择的节点
         if(null!=n){
@@ -211,7 +360,7 @@
         var tags = $("#news_tags").combobox("getText");
         var tagValues = $("#news_tags").combobox("getValues");
         $.ajax({
-            url: "index.php?r=site/save_news&type="+page.type,
+            url: "admin.php?r=site/save_news&type="+page.type,
 //            dataType: "json",
             type: "post",
             data: {
@@ -220,7 +369,8 @@
                 news_sump: $("#news_sump").val(),
                 news_summary: $("#news_summary").val(),
                 news_pic: $("#news_pic").val(),
-                news_content: editor.getData(),
+                news_content: md_content,
+//                news_content: editor.getData(),
                 news_author: $("#news_author").val(),
                 news_editor: $("#news_editor").val(),
                 news_category: categoryId,

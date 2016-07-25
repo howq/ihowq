@@ -25,7 +25,7 @@
 </table>
 
 <div id="edit-catogory" title="目录编辑" class="easyui-panel" style="padding:5px;width: 200px" data-options="iconCls:'icon-edit',collapsible:true,">
-    <ul id="tt" class="easyui-tree" data-options="url:'index.php?r=site/category',method:'get',animate:true"></ul>
+    <ul id="tt" class="easyui-tree" data-options="url:'admin.php?r=site/category',method:'get',animate:true"></ul>
 </div>
 
 <script>

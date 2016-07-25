@@ -24,10 +24,10 @@
     </tr>
 </table>
 
-<!--url:'index.php?r=site/news',-->
+<!--url:'admin.php?r=site/news',-->
 
 <table id="grid-news" title="文章编辑" class="easyui-datagrid" style="width: 1030px" data-options="
-               url:'index.php?r=site/news',
+               url:'admin.php?r=site/news',
                method:'get',
                singleSelect:true,
                collapsible:true,
@@ -50,12 +50,12 @@
 <script type="text/javascript">
 
     function addNews(){
-        window.open("index.php?r=site/addnews");
+        window.open("admin.php?r=site/addnews");
     }
 
     function editNews(){
         if(check.isOkAlter()){
-            window.open("index.php?r=site/addnews&news_id="+check.editId);
+            window.open("admin.php?r=site/addnews&news_id="+check.editId);
         }
     }
     function removeNews(){
@@ -63,7 +63,7 @@
         var index=$('#grid-news').datagrid('getRowIndex',data);
         $('#grid-news').datagrid('deleteRow',index);
         $.ajax({
-            url:"index.php?r=site/remove_news",
+            url:"admin.php?r=site/remove_news",
             type:'POST',
             data:{
                 news_id:data.news_id
@@ -207,7 +207,7 @@
 
     function getData(){
         $.ajax({
-            url: "index.php?r=site/news",
+            url: "admin.php?r=site/news",
             data: {},
             dataType: "json",
             type:"post",

@@ -8,6 +8,13 @@ use common\models\Tag;
 use yii\helpers\Json;
 use yii\web\Controller;
 
+//// Install PSR-0-compatible class autoloader
+//spl_autoload_register(function($class){
+//    require preg_replace('{\\\\|_(?!.*\\\\)}', DIRECTORY_SEPARATOR, ltrim($class, '\\')).'.php';
+//});
+//// Get Markdown class
+//use \Michelf\Markdown;
+
 class SiteController extends Controller
 {
 	public $layout = 'common';
@@ -143,9 +150,12 @@ class SiteController extends Controller
         $newsList = new News();
         $id = \YII::$app->request->get("news_id");
         $newsContent = $newsList->getNewsContent($id);
-        $data['content']=$newsContent;
         $view = \Yii::$app->view;
         $view->title = $newsContent[0]['news_title'];
+//        $markdown = Markdown::defaultTransform($newsContent[0]['news_content']);
+//        $newsContent[0]['news_content'] = $markdown;
+
+        $data['content']=$newsContent;
         return $this->render('content',$data);
     }
 
