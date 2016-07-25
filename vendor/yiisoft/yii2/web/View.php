@@ -97,6 +97,7 @@ class View extends \yii\base\View
      * @var string the page title
      */
     public $title;
+    public $brand;
     public $keywords;
     public $description;
     /**
