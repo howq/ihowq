@@ -136,11 +136,11 @@
                         if(''!=tags){
                             tags ='<span class="hidden-xs"><i class="glyphicon glyphicon-tags"></i>'+tags+'</span>';
                         }
-                        var user;
+                        var user='';
                         if(news.news_author){
                             user ='<span class="hidden-xs"><i class="glyphicon glyphicon-user" ></i>'+news.news_author+'</span>';
                         }
-                        
+
                         var bot = '<p class="news-info">'
                         +user
                         +tags
