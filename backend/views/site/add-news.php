@@ -178,11 +178,11 @@
                 //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
                 //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
                 //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
-                imageUpload : true,
+                imageUpload : false,
                 imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
                 imageUploadURL : "./php/upload.php",
                 onload : function() {
-                    console.log('onload', this);
+//                    console.log('onload', this);
                     //this.fullscreen();
                     //this.unwatch();
                     //this.watch().fullscreen();
@@ -382,7 +382,7 @@
                 if('success'==data){
                     alert('上传成功!');
                     document.getElementById("form").reset();
-                    editor.setData("");
+                //    editor.setData("");
                     if(page.type){
                         CloseWebPage();
                     }
@@ -391,9 +391,8 @@
                     alert('上传格式错误!');
                 }
             },
-            error: function () {
-                alert("服务器内部出错，上传失败!");
-            }
+            error: function(xhr){alert('动态页出错\n\n'+xhr.responseText);}///////////增加错误回调，看什么问题
+            
         });
     }
 
