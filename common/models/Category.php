@@ -70,7 +70,7 @@ class Category extends \yii\db\ActiveRecord
      * @return array|\yii\db\ActiveRecord[]
      */
     public function getNewsByCategoryId($catelogy_id,$maxId){
-        $sql = 'SELECT news_id,news_pic,news_title,news_summary,browse_count,comment_count FROM news
+        $sql = 'SELECT * FROM news
                 WHERE news_category='.$catelogy_id.' AND news_id<'.$maxId.' ORDER BY news_id DESC LIMIT '.self::NEWSNUM;
         $news = News::findBySql($sql)->all();
         return $news;
