@@ -123,7 +123,9 @@
                         var tagArr = news.news_tag;
                         for(var i=0;i<tagArr.length;i++){
                             oldColor = page.ChangeTagColor(oldColor);
-                            tags += '<a class="small button '+oldColor+'" style="margin-right:0.6vw;" href="index.php?r=site/index&tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
+//                            $tagsNoColor = $tagsNoColor.'<a class="news-tags" href="index.php?r=site/index&tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
+                            tags += '<a class="news-tags" href="index.php?r=site/index&tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
+//                            tags += '<a class="small button '+oldColor+'" style="margin-right:0.6vw;" href="index.php?r=site/index&tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
                         }
                         var summary;
                         if(page.isMobile){
@@ -131,14 +133,29 @@
                         }else{
                             summary = news.news_summary;
                         }
+                        if(''!=tags){
+                            tags ='<span class="hidden-xs"><i class="glyphicon glyphicon-tags"></i>'+tags+'</span>';
+                        }
+                        var user;
+                        if(news.news_author){
+                            user ='<span class="hidden-xs"><i class="glyphicon glyphicon-user" ></i>'+news.news_author+'</span>';
+                        }
+                        
+                        var bot = '<p class="news-info">'
+                        +user
+                        +tags
+                        +'<span class="hidden-xs"><i class="glyphicon glyphicon-time" ></i>'+news.news_date+'</span>'
+                        +'<span class="item-view hidden-xs"><i class="glyphicon glyphicon-eye-open"></i>'+news.browse_count+'</span>'
+                        +'</p>';
+
                         var html = '<div class="news-main col-xs-12 col-md-12" >'
                             +'<div class="col-xs-3 col-sm-3 col-md-3 pic-parent">'
-                            +'<a href="index.php?r=site/content&news_id='+news.news_id+'"><img src="'+news.news_pic+'" class="img-thumbnail"/></a>'
+                            +'<a href="index.php?r=site/content&news_id='+news.news_id+'"><img src="'+news.news_pic+'" class="img-thumbnail new-pic"/></a>'
                             + '</div>'
                             +'<div class="col-xs-9 col-sm-9 col-md-9 news-content">'
                             +'<a class="news-title" href="index.php?r=site/content&news_id='+news.news_id+'">'+news.news_title+'</a>'
                             +'<p class="news-excerpt">'+summary+'</p>'
-                            +'<div class="news-tag hidden-xs">'+tags+'</div>'
+                            +bot
                             +'</div>'
                             +'</div>';
                         $('#loading').remove();
