@@ -433,7 +433,7 @@ use yii\helpers\Html;
                 }
                 ?>
 
-                <li><a href="index.php?r=site/about">关于我</a></li>
+                <li><a href="index.php?r=site/content&news_id=3">关于我</a></li>
 <!--                <li><a href="#">联系我们</a></li>-->
             </ul>
             <div class="col-md-1 navbar-right"></div>
@@ -570,6 +570,3 @@ use yii\helpers\Html;
 
 </body>
 </html>
-
-
-
