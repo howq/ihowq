@@ -6,6 +6,8 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
+yii::$classMap['FrontendConfig'] = dirname(dirname(__DIR__)) .'/frontend/config/FrontendConfig.php';
+
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),

@@ -13,8 +13,8 @@ use yii\helpers\Html;
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><?= Html::encode($this->title) ?></title>
-    <meta name="description" content="<?= Html::encode($this->description) ?>">
-    <meta name="keywords" content="<?= Html::encode($this->keywords) ?>">
+    <meta name="description" content="<?= Html::encode(FrontendConfig::DESCRIPTION) ?>">
+    <meta name="keywords" content="<?= Html::encode(FrontendConfig::KEYWORDS) ?>">
 
     <link rel="stylesheet" type="text/css" href="frontend/libs/css/papermashup.css">     <!--标签颜色-->
 
@@ -395,7 +395,7 @@ use yii\helpers\Html;
                 <span class="icon-bar"></span>
             </button>
             <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
-            <a href="index.php" class="navbar-brand " id="brand">白马工作室</a>
+            <a href="index.php" class="navbar-brand " id="brand"><?=FrontendConfig::BRAND?></a>
         </div>
 
         <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
