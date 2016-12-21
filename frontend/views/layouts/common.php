@@ -395,7 +395,7 @@ use yii\helpers\Html;
                 <span class="icon-bar"></span>
             </button>
             <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
-            <a href="index.php" class="navbar-brand " id="brand">剑指零壹</a>
+            <a href="index.php" class="navbar-brand " id="brand">白马工作室</a>
         </div>
 
         <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
@@ -420,10 +420,21 @@ use yii\helpers\Html;
                         $orderId++;
                     }
                     if(empty($childName)){
+
+                        if($name=="开放计划"){
+                            echo ' <li><a href="index.php?r=site/about&navtype=3">开放计划</a></li>';
+                            continue;
+                        }
+
                         echo '<li><a href="index.php?r=site/index&category_id='.$parentId.'">'.$name.'</a></li>';
                     }else {
-                        echo '<li class="dropdown"><a href="index.php?r=site/index&category_id='.$parentId.'" data-toggle="dropdown" class="dropdown-toggle">'.$name.'<span class="caret"></span></a>' .
-                            '<ul class="dropdown-menu">';
+                        if($name=="牧马工程"){
+                            echo '<li class="dropdown"><a href="index.php?r=site/about&navtype=2" data-toggle="dropdown" class="dropdown-toggle">'."牧马工程".'<span class="caret"></span></a>' .
+                                '<ul class="dropdown-menu">';
+                        }else{
+                            echo '<li class="dropdown"><a href="index.php?r=site/index&category_id='.$parentId.'" data-toggle="dropdown" class="dropdown-toggle">'.$name.'<span class="caret"></span></a>' .
+                                '<ul class="dropdown-menu">';
+                        }
                         for($i=0;$i<sizeof($childName);$i++){
                             echo '<li><a href="index.php?r=site/index&category_id='.$childIdArr[$i].'">'.$childName[$i].'</a></li>';
                         }
@@ -433,7 +444,7 @@ use yii\helpers\Html;
                 }
                 ?>
 
-                <li><a href="index.php?r=site/content&news_id=3">关于我</a></li>
+                <li><a href="index.php?r=site/about&navtype=1">关于我们</a></li>
 <!--                <li><a href="#">联系我们</a></li>-->
             </ul>
             <div class="col-md-1 navbar-right"></div>
