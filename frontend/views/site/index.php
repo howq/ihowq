@@ -8,6 +8,8 @@
     </div>
 
     <?php
+    use yii\helpers\Url;
+
     $newsMains=$this->params['newsMain'];
 
     $color = Array('pink','green','blue','red','orange','yellow');
@@ -26,7 +28,7 @@
         foreach($tagArr as $tag){
             foreach($tag as $str){
                 $oldColor =chooseColor($oldColor);
-                $tagsNoColor = $tagsNoColor.'<a class="news-tags" href="index.php?r=site/index&tagName='.$str.'">'.$str.'</a>';
+                $tagsNoColor = $tagsNoColor.'<a class="news-tags" href="'.Url::toRoute(['site/index', 'tagName' => $str]).$str.'</a>';
             //    $tags = $tags.'<a class="small button '.$oldColor.'" style="margin-right:0.6vw;" href="index.php?r=site/index&tagName='.$str.'">'.$str.'</a>';
             }
         }
@@ -51,10 +53,10 @@
 
         echo '<div class="news-main col-xs-12 col-md-12" >
                     <div class="col-xs-3 col-sm-3 col-md-3 pic-parent">
-                        <a href="index.php?r=site/content&news_id='.$newsMain['news_id'].'"><img src="'.$newsMain['news_pic'].'" class="img-thumbnail new-pic"/></a>
+                        <a href="'.Url::toRoute(['site/content', 'news_id' => $newsMain['news_id']]).'"><img src="'.$newsMain['news_pic'].'" class="img-thumbnail new-pic"/></a>
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 news-content">
-                        <a class="news-title" href="index.php?r=site/content&news_id='.$newsMain['news_id'].'">'.$newsMain['news_title'].'</a>
+                        <a class="news-title" href="'.Url::toRoute(['site/content', 'news_id' => $newsMain['news_id']]).'">'.$newsMain['news_title'].'</a>
                         <p class="news-excerpt">'.$summary.'</p>
                         <p class="news-info">
                             '.$user.'
@@ -95,7 +97,7 @@
         },
         LoadData:function(){
             $.ajax({
-                url: "index.php?r=site/more",
+                url: "<?=Url::toRoute(['site/more'])?>",
                 data: {
                     lastId:page.lastId,
                     categoryId:page.categoryId,
@@ -124,7 +126,7 @@
                         for(var i=0;i<tagArr.length;i++){
                             oldColor = page.ChangeTagColor(oldColor);
 //                            $tagsNoColor = $tagsNoColor.'<a class="news-tags" href="index.php?r=site/index&tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
-                            tags += '<a class="news-tags" href="index.php?r=site/index&tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
+                            tags += '<a class="news-tags" href="index.html?tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
 //                            tags += '<a class="small button '+oldColor+'" style="margin-right:0.6vw;" href="index.php?r=site/index&tagName='+tagArr[i].tag_name+'">'+tagArr[i].tag_name+'</a>';
                         }
                         var summary;
@@ -150,10 +152,10 @@
 
                         var html = '<div class="news-main col-xs-12 col-md-12" >'
                             +'<div class="col-xs-3 col-sm-3 col-md-3 pic-parent">'
-                            +'<a href="index.php?r=site/content&news_id='+news.news_id+'"><img src="'+news.news_pic+'" class="img-thumbnail new-pic"/></a>'
+                            +'<a href="index.html?news_id='+news.news_id+'"><img src="'+news.news_pic+'" class="img-thumbnail new-pic"/></a>'
                             + '</div>'
                             +'<div class="col-xs-9 col-sm-9 col-md-9 news-content">'
-                            +'<a class="news-title" href="index.php?r=site/content&news_id='+news.news_id+'">'+news.news_title+'</a>'
+                            +'<a class="news-title" href="index.html?news_id='+news.news_id+'">'+news.news_title+'</a>'
                             +'<p class="news-excerpt">'+summary+'</p>'
                             +bot
                             +'</div>'

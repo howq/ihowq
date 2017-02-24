@@ -1,4 +1,7 @@
-<form class="mt30" role="form" method="POST" action="admin.php?r=site/cookie" style="width: 15vw">
+<?php
+    use yii\helpers\Url;
+?>
+<form class="mt30" role="form" method="POST" action="<?=Url::toRoute(['site/cookie'])?>" style="width: 15vw">
      <div class="form-group">
          <label class="control-label" for="password">密码</label>
          <input type="password" placeholder="请输入密码确认上传权限" required="" name="password" class="form-control">

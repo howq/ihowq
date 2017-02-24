@@ -5,8 +5,9 @@
  * Date: 2016/3/12
  * Time: 23:28
  */
+use yii\helpers\Url;
 ?>
-<script language="JavaScript" src="libs/JSON-js/json2.js"></script>
+<script language="JavaScript" src="<?=yii::$app->homeUrl.BackendConfig::BACKEND_WEB_LIB?>/JSON-js/json2.js"></script>
 <!--Tag-->
 <!--<table id="toolbar" id="actions" style="width:320px; margin-bottom: 10px">-->
 <!--    <tr>-->
@@ -56,7 +57,7 @@
             title: '标签编辑',
             collapsible: true,
             singleSelect: true,
-            url: 'admin.php?r=site/tag',
+            url: '<?=Url::toRoute(['site/tag'])?>',
             method:'get',
             iconCls:'icon-edit',
             pagination:true,
@@ -130,7 +131,7 @@
            type = 0;   //修改
        }
        $.ajax({
-           url:"admin.php?r=site/save_tag",
+           url:"<?=Url::toRoute(['site/save_tag'])?>",
            type:'POST',
            data:{
                type:type,
@@ -189,7 +190,7 @@
         var index=$('#grid-tag').datagrid('getRowIndex',data);
         $('#grid-tag').datagrid('deleteRow',index);
         $.ajax({
-            url:"admin.php?r=site/remove_tag",
+            url:"<?=Url::toRoute(['site/remove_tag'])?>",
             type:'POST',
             data:{
                 tag_id:data.tag_id
@@ -356,7 +357,7 @@
 
     function getData(){
         $.ajax({
-            url: "admin.php?r=site/tag",
+            url:"<?=Url::toRoute(['site/tag'])?>",
             data: {},
             dataType: "json",
             type:"post",

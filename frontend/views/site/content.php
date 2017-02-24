@@ -5,6 +5,8 @@
  * Date: 2016/3/2
  * Time: 15:06
  */
+
+use yii\helpers\Url;
 ?>
 
 <style type="text/css">
@@ -58,17 +60,17 @@
 
 </style>
 
-<link rel="stylesheet" href="common/libs/editor/css/editormd.preview.css" />
+<link rel="stylesheet" href="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/css/editormd.preview.css" />
         <!--左侧文章目录-->
 <div id="news-left" class="col-xs-12 col-sm-7 col-sm-offset-1">
          <div id="nav-header" class="hidden-xs">
              <ol class="breadcrumb">
-                 <li><a href="index.php">首页</a></li>
+                 <li><a href="<?=yii::$app->homeUrl?>">首页</a></li>
                  <li><?php
                          if(sizeof($content)==1){
-                             echo '<a href="index.php">'.'其他'.'</a>';
+                             echo '<a href="'.$app->homeUrl.'">'.'其他'.'</a>';
                          }else{
-                             echo '<a href="index.php?r=site/index&category_id='.$content[0]['news_category'].'">'.$content[1]['category_name'].'</a>';
+                             echo '<a href="'.Url::toRoute(['site/index', 'category_id' => $content[0]['news_category']]).'">'.$content[1]['category_name'].'</a>';
                          }
                          ?>
                  </li>
@@ -115,7 +117,7 @@
     var Init = {
         addView:function(){
             $.ajax({
-                url: "index.php?r=site/view",
+                url: "<?=Url::toRoute(['site/view'])?>",
                 type: "get",
                 data: {
                     newsId:<?=$content[0]['news_id']?>
@@ -126,16 +128,16 @@
     Init.addView();
 </script>
 
-<script src="common/libs/editor/editormd.min.js"></script>
+<script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/editormd.min.js"></script>
 
-<script src="common/libs/editor/lib/marked.min.js"></script>
-<script src="common/libs/editor/lib/prettify.min.js"></script>
+<script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/lib/marked.min.js"></script>
+<script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/lib/prettify.min.js"></script>
 
-<script src="common/libs/editor/lib/raphael.min.js"></script>
-<script src="common/libs/editor/lib/underscore.min.js"></script>
-<script src="common/libs/editor/lib/sequence-diagram.min.js"></script>
-<script src="common/libs/editor/lib/flowchart.min.js"></script>
-<script src="common/libs/editor/lib/jquery.flowchart.min.js"></script>
+    <script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/lib/raphael.min.js"></script>
+<script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/lib/underscore.min.js"></script>
+<script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/lib/sequence-diagram.min.js"></script>
+<script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/lib/flowchart.min.js"></script>
+<script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/editor/lib/jquery.flowchart.min.js"></script>
 
 <script type="application/javascript">
     testEditormdView2 = editormd.markdownToHTML("news-content", {

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: buzhi
- * Date: 2016/3/12
- * Time: 23:28
- */
+    use yii\helpers\Url;
 ?>
 <!--News-->
 
@@ -27,7 +22,7 @@
 <!--url:'admin.php?r=site/news',-->
 
 <table id="grid-news" title="文章编辑" class="easyui-datagrid" style="width: 1030px" data-options="
-               url:'admin.php?r=site/news',
+               url:'<?=Url::toRoute(['site/news'])?>',
                method:'get',
                singleSelect:true,
                collapsible:true,
@@ -50,34 +45,36 @@
 <script type="text/javascript">
 
     function addNews(){
-        window.open("admin.php?r=site/addnews");
+        window.open("<?=Url::toRoute(['site/addnews'])?>");
     }
 
     function editNews(){
         if(check.isOkAlter()){
-            window.open("admin.php?r=site/addnews&news_id="+check.editId);
+            window.open("<?=Url::toRoute(['site/addnews'])."?news_id="?>"+check.editId);
         }
     }
     function removeNews(){
         var data = $("#grid-news").datagrid('getSelected');
         var index=$('#grid-news').datagrid('getRowIndex',data);
-        $('#grid-news').datagrid('deleteRow',index);
         $.ajax({
-            url:"admin.php?r=site/remove_news",
+//            url:"<?//=Url::toRoute(['site/remove_news'])?>//",
+            url:"http://localhost/bmbak/bymarxer/site/remove_news",
             type:'POST',
             data:{
                 news_id:data.news_id
             },
             success: function (data) {
                 if('success'==data){
+                    $('#grid-news').datagrid('deleteRow',index);
                     alert('删除成功!');
                 }
                 else if('fail'==data){
                     alert('删除失败!');
                 }
             },
-            error: function () {
-                alert("服务器内部出错，删除失败!");
+            error: function (data) {
+//                alert("服务器内部出错，删除失败!");
+                alert(data.error);
             }
         });
     }
@@ -207,7 +204,7 @@
 
     function getData(){
         $.ajax({
-            url: "admin.php?r=site/news",
+            url: "<?=Url::toRoute(['site/news'])?>",
             data: {},
             dataType: "json",
             type:"post",

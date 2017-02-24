@@ -40,7 +40,6 @@ class SiteController extends Controller
         $categoryList = new Category();
         $category = $categoryList->Category;
 
-
         $view = \Yii::$app->view;
         $view->params['hotView']= $newsHotView;
         $view->params['hotComment']= $newsHotComment;

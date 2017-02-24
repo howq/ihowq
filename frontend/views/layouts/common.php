@@ -4,7 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -16,16 +16,16 @@ use yii\helpers\Html;
     <meta name="description" content="<?= Html::encode(FrontendConfig::DESCRIPTION) ?>">
     <meta name="keywords" content="<?= Html::encode(FrontendConfig::KEYWORDS) ?>">
 
-    <link rel="stylesheet" type="text/css" href="frontend/libs/css/papermashup.css">     <!--标签颜色-->
+    <link rel="stylesheet" type="text/css" href="<?=yii::$app->homeUrl.FrontendConfig::FRONTEND_LIB?>/css/papermashup.css">     <!--标签颜色-->
 
-    <link href="common/libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!--        <script src="../views/layouts/js/jquery.min.js"></script>-->
-    <script src="common/libs/js/jquery.min.js" ></script>
-    <script src="common/libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/js/jquery.min.js" ></script>
+    <script src="<?=yii::$app->homeUrl.CommonConfig::COMMON_LIB?>/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 
     <!--ToHead-->
-    <link href="frontend/libs/css/tohead.css" rel="stylesheet" type="text/css" />
-    <script src="frontend/libs/js/tohead.js"></script>
+    <link href="<?=yii::$app->homeUrl.FrontendConfig::FRONTEND_LIB?>/css/tohead.css" rel="stylesheet" type="text/css" />
+    <script src="<?=yii::$app->homeUrl.FrontendConfig::FRONTEND_LIB?>/js/tohead.js"></script>
 
     <style type="text/css">
         html{
@@ -395,7 +395,7 @@ use yii\helpers\Html;
                 <span class="icon-bar"></span>
             </button>
             <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
-            <a href="index.php" class="navbar-brand " id="brand"><?=FrontendConfig::BRAND?></a>
+            <a href="<?=yii::$app->homeUrl?>" class="navbar-brand " id="brand"><?=FrontendConfig::BRAND?></a>
         </div>
 
         <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
@@ -420,23 +420,22 @@ use yii\helpers\Html;
                         $orderId++;
                     }
                     if(empty($childName)){
-
                         if($name=="开放计划"){
-                            echo ' <li><a href="index.php?r=site/about&navtype=3">开放计划</a></li>';
+                            echo ' <li><a href="'.Url::toRoute(['site/about', 'navtype' => 3]).'">开放计划</a></li>';
                             continue;
                         }
 
-                        echo '<li><a href="index.php?r=site/index&category_id='.$parentId.'">'.$name.'</a></li>';
+                        echo '<li><a href="'.Url::toRoute(['site/index', 'category_id' => $parentId]).'">'.$name.'</a></li>';
                     }else {
                         if($name=="牧马工程"){
-                            echo '<li class="dropdown"><a href="index.php?r=site/about&navtype=2" data-toggle="dropdown" class="dropdown-toggle">'."牧马工程".'<span class="caret"></span></a>' .
+                            echo '<li class="dropdown"><a href="'.Url::toRoute(['site/about', 'navtype' => 2]).'" data-toggle="dropdown" class="dropdown-toggle">'."牧马工程".'<span class="caret"></span></a>' .
                                 '<ul class="dropdown-menu">';
                         }else{
-                            echo '<li class="dropdown"><a href="index.php?r=site/index&category_id='.$parentId.'" data-toggle="dropdown" class="dropdown-toggle">'.$name.'<span class="caret"></span></a>' .
+                            echo '<li class="dropdown"><a href="'.Url::toRoute(['site/index', 'category_id' => $parentId]).'" data-toggle="dropdown" class="dropdown-toggle">'.$name.'<span class="caret"></span></a>' .
                                 '<ul class="dropdown-menu">';
                         }
                         for($i=0;$i<sizeof($childName);$i++){
-                            echo '<li><a href="index.php?r=site/index&category_id='.$childIdArr[$i].'">'.$childName[$i].'</a></li>';
+                            echo '<li><a href="'.Url::toRoute(['site/index', 'category_id' => $childIdArr[$i]]).'">'.$childName[$i].'</a></li>';
                         }
                         echo '</ul></li>';
                     }
@@ -444,7 +443,7 @@ use yii\helpers\Html;
                 }
                 ?>
 
-                <li><a href="index.php?r=site/about&navtype=1">关于我们</a></li>
+                <li><a href="<?=Url::toRoute(['site/about', 'navtype' => 1])?>">关于我们</a></li>
 <!--                <li><a href="#">联系我们</a></li>-->
             </ul>
             <div class="col-md-1 navbar-right"></div>
@@ -476,19 +475,19 @@ use yii\helpers\Html;
                         <ul class="nav nav-tabs" role="tablist" id="myTab">
                             <li>
                                 <span>
-                                    <a><img src="frontend/img/hot.png" href="#views" alt="热评" title="热评"></a>
+                                    <a><img src="<?=yii::$app->homeUrl.FrontendConfig::FRONTEND_IMG?>/hot.png" href="#views" alt="热评" title="热评"></a>
                                     <a href="#comments" role="tab" data-toggle="tab">热评</a>
                                 </span>
                             </li>
                             <li class="active">
                                 <span>
-                                    <a><img src="frontend/img/eye.png" href="#views" alt="热览" title="热览"></a>
+                                    <a><img src="<?=yii::$app->homeUrl.FrontendConfig::FRONTEND_IMG?>/eye.png" href="#views" alt="热览" title="热览"></a>
                                     <a href="#views" role="tab" data-toggle="tab">热览</a>
                                 </span>
                             </li>
                             <li>
                                 <span>
-                                    <a><img src="frontend/img/random.png" href="#views" alt="随机" title="随机"></a>
+                                    <a><img src="<?=yii::$app->homeUrl.FrontendConfig::FRONTEND_IMG?>/random.png" href="#views" alt="随机" title="随机"></a>
                                     <a href="#rands" role="tab" data-toggle="tab">随机</a>
                                 </span>
                             </li>
@@ -501,7 +500,7 @@ use yii\helpers\Html;
                                     <?php
                                     $hotViews=$this->params['hotView'];
                                     foreach($hotViews as $hotView){
-                                        $tmp = '<a rel="bookmark" class="list-group-item kb-list-date kb-post-list" href="index.php?r=site/content&news_id='.$hotView->news_id.'">
+                                        $tmp = '<a rel="bookmark" class="list-group-item kb-list-date kb-post-list" href="'.Url::toRoute(['site/content', 'news_id' => $hotView->news_id]).'">'.'
                                             <span class="badge">
                                                     '.$hotView->browse_count.'
                                             </span>
@@ -522,7 +521,7 @@ use yii\helpers\Html;
                                     <?php
                                     $hotComments=$this->params['hotComment'];
                                     foreach($hotComments as $hotComment){
-                                        $tmp = '<a rel="bookmark" class="list-group-item kb-list-date kb-post-list" href="index.php?r=site/content&news_id='.$hotComment->news_id.'">
+                                        $tmp = '<a rel="bookmark" class="list-group-item kb-list-date kb-post-list" href="'.Url::toRoute(['site/content', 'news_id' => $hotComment->news_id]).'">'.'
                                             <span class="badge">
                                                     '.$hotComment->browse_count.'
                                             </span>
@@ -542,7 +541,7 @@ use yii\helpers\Html;
                                     <?php
                                     $rands=$this->params['rands'];
                                     foreach($rands as $rand){
-                                        $tmp = '<a rel="bookmark" class="list-group-item kb-list-date kb-post-list" href="index.php?r=site/content&news_id='.$rand->news_id.'">
+                                        $tmp = '<a rel="bookmark" class="list-group-item kb-list-date kb-post-list" href="'.Url::toRoute(['site/content', 'news_id' => $rand->news_id]).'">'.'
                                             <span class="badge">
                                                     '.$rand->browse_count.'
                                             </span>

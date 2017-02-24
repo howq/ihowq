@@ -3,7 +3,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ihowqdb',
+            'dsn' => 'mysql:host=localhost;dbname=bymarxdb',
             'username' => 'howq',
             'password' => '90909bu0',
             'charset' => 'utf8',
