@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TestEasyUI</title>
+
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../bootstrap-3.3.5/js/bootstrap.min.js"></script>
+
+    <!--easyui全部-->
+    <script type="text/javascript" src="jquery.easyui.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="extension/jquery-easyui-ribbon/ribbon.css">
+    <link rel="stylesheet" type="text/css" href="extension/jquery-easyui-ribbon/ribbon-icon.css">
+
+    <script type="text/javascript" src="extension/jquery-easyui-ribbon/jquery.ribbon.js"></script>
+
+</head>
+<body>
+<div class="easyui-ribbon" style="width:700px;">
+    <div title="Home">
+        <div class="ribbon-group">
+            <div class="ribbon-toolbar">
+                <a href="#" class="easyui-menubutton" data-options="name:'paste',iconCls:'icon-paste-large',iconAlign:'top',size:'large'">Paste</a>
+            </div>
+            <div class="ribbon-toolbar">
+                <a href="#" class="easyui-linkbutton" data-options="name:'cut',iconCls:'icon-cut',plain:true">Cut</a><br>
+                <a href="#" class="easyui-linkbutton" data-options="name:'copy',iconCls:'icon-copy',plain:true">Copy</a><br>
+                <a href="#" class="easyui-linkbutton" data-options="name:'format',iconCls:'icon-format',plain:true">Format</a>
+            </div>
+            <div class="ribbon-group-title">Clipboard</div>
+        </div>
+        <div class="ribbon-group-sep"></div>
+        <div class="ribbon-group">
+            <div class="ribbon-toolbar" style="width:200px"></div>
+            <div class="ribbon-group-title">other title</div>
+        </div>
+        <div class="ribbon-group-sep"></div>
+    </div>
+</div>
+
+<div id="rr" style="width:700px;"></div>
+<script>
+//    $.parser.parse();       // 解析所有页面
+    $(function(){
+        $('#rr').ribbon({
+            data:data
+        });
+    });
+</script>
+
+
+</body>
+</html>
