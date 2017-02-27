@@ -27,7 +27,7 @@ use yii\helpers\Url;
 
 <!--toolbar="#toolbar"-->
 <!--<table id="grid-tag" title="标签编辑" class="easyui-datagrid" style="width: 320px" data-options="-->
-<!--                url:'admin.php?r=site/tag',-->
+<!--                url:'admin.php?r=manage/tag',-->
 <!--                method:'get',-->
 <!--                singleSelect:true,-->
 <!--                collapsible:true,-->
@@ -57,7 +57,7 @@ use yii\helpers\Url;
             title: '标签编辑',
             collapsible: true,
             singleSelect: true,
-            url: '<?=Url::toRoute(['site/tag'])?>',
+            url: '<?=Url::toRoute(['manage/tag'])?>',
             method:'get',
             iconCls:'icon-edit',
             pagination:true,
@@ -131,7 +131,7 @@ use yii\helpers\Url;
            type = 0;   //修改
        }
        $.ajax({
-           url:"<?=Url::toRoute(['site/save_tag'])?>",
+           url:"<?=Url::toRoute(['manage/save_tag'])?>",
            type:'POST',
            data:{
                type:type,
@@ -190,7 +190,7 @@ use yii\helpers\Url;
         var index=$('#grid-tag').datagrid('getRowIndex',data);
         $('#grid-tag').datagrid('deleteRow',index);
         $.ajax({
-            url:"<?=Url::toRoute(['site/remove_tag'])?>",
+            url:"<?=Url::toRoute(['manage/remove_tag'])?>",
             type:'POST',
             data:{
                 tag_id:data.tag_id
@@ -357,7 +357,7 @@ use yii\helpers\Url;
 
     function getData(){
         $.ajax({
-            url:"<?=Url::toRoute(['site/tag'])?>",
+            url:"<?=Url::toRoute(['manage/tag'])?>",
             data: {},
             dataType: "json",
             type:"post",

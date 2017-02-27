@@ -78,14 +78,14 @@ use yii\helpers\Url;
             <div class="form-group col-md-12" style="padding: 0 30px;">
                 <label class="col-md-12 control-label">目录</label>
                 <select id="news_category" class="easyui-combotree col-md-12" style="width:100%"
-                        data-options="url:'<?=Url::toRoute(['site/category'])?>',required:false">
+                        data-options="url:'<?=Url::toRoute(['manage/category'])?>',required:false">
                 </select>
             </div>
 
             <div class="form-group col-md-12" style="padding: 0 30px;">
                 <label class="col-md-12 control-label">标签</label>
                 <input id="news_tags" class="easyui-combobox" name="dept" style="width:100%"
-                       data-options="valueField:'tag_id',textField:'tag_name',url:'<?=Url::toRoute(['site/tag','choosetag' => 1 ])?>',multiple:true" />
+                       data-options="valueField:'tag_id',textField:'tag_name',url:'<?=Url::toRoute(['manage/tag','choosetag' => 1 ])?>',multiple:true" />
             </div>
 
             <div class="form-group col-md-12">
@@ -164,7 +164,7 @@ use yii\helpers\Url;
         },
         LoadEditNews:function () {
             $.ajax({
-                url:"admin.php?r=site/load_news&news_id="+this.news_id,
+                url:"admin.php?r=manage/load_news&news_id="+this.news_id,
                 type:'POST',
                 data:{
                     news_id:this.news_id
@@ -257,7 +257,7 @@ use yii\helpers\Url;
         var tags = $("#news_tags").combobox("getText");
         var tagValues = $("#news_tags").combobox("getValues");
         $.ajax({
-            url: "<?=Url::toRoute(['site/save_news'])."?type="?>"+page.type,
+            url: "<?=Url::toRoute(['manage/save_news'])."?type="?>"+page.type,
 //            dataType: "json",
             type: "post",
             data: {

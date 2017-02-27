@@ -19,10 +19,10 @@
     </tr>
 </table>
 
-<!--url:'admin.php?r=site/news',-->
+<!--url:'admin.php?r=manage/news',-->
 
 <table id="grid-news" title="文章编辑" class="easyui-datagrid" style="width: 1030px" data-options="
-               url:'<?=Url::toRoute(['site/news'])?>',
+               url:'<?=Url::toRoute(['manage/news'])?>',
                method:'get',
                singleSelect:true,
                collapsible:true,
@@ -45,20 +45,20 @@
 <script type="text/javascript">
 
     function addNews(){
-        window.open("<?=Url::toRoute(['site/addnews'])?>");
+        window.open("<?=Url::toRoute(['manage/addnews'])?>");
     }
 
     function editNews(){
         if(check.isOkAlter()){
-            window.open("<?=Url::toRoute(['site/addnews'])."?news_id="?>"+check.editId);
+            window.open("<?=Url::toRoute(['manage/addnews'])."?news_id="?>"+check.editId);
         }
     }
     function removeNews(){
         var data = $("#grid-news").datagrid('getSelected');
         var index=$('#grid-news').datagrid('getRowIndex',data);
         $.ajax({
-//            url:"<?//=Url::toRoute(['site/remove_news'])?>//",
-            url:"http://localhost/bmbak/bymarxer/site/remove_news",
+//            url:"<?//=Url::toRoute(['manage/remove_news'])?>//",
+            url:"http://localhost/bmbak/bymarxer/manage/remove_news",
             type:'POST',
             data:{
                 news_id:data.news_id
@@ -204,7 +204,7 @@
 
     function getData(){
         $.ajax({
-            url: "<?=Url::toRoute(['site/news'])?>",
+            url: "<?=Url::toRoute(['manage/news'])?>",
             data: {},
             dataType: "json",
             type:"post",
